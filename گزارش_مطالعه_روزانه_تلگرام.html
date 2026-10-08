@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#16a34a">
+<meta name="color-scheme" content="light">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<title>گزارش مطالعه روزانه</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f3fbf6;--card:#ffffff;--ink:#12332a;--mute:#5a7d6f;--line:#d3ebdc;
+  --a:#16a34a;--b:#10b981;--c:#84cc16;--d:#059669;
+  --glow:rgba(22,163,74,.16);
+  --tg-bg: var(--tg-theme-bg-color, var(--bg));
+  --tg-text: var(--tg-theme-text-color, var(--ink));
+  --tg-hint: var(--tg-theme-hint-color, var(--mute));
+  --tg-button: var(--tg-theme-button-color, var(--a));
+  --tg-button-text: var(--tg-theme-button-text-color, #fff);
+  --tg-secondary: var(--tg-theme-secondary-bg-color, var(--card));
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--tg-bg);
+  color:var(--tg-text);
+  font-family:'Vazirmatn','Vazir',Tahoma,'Geeza Pro','Noto Sans Arabic',sans-serif;
+  line-height:1.7;
+  overflow-x:hidden;
+  -webkit-text-size-adjust:100%;
+  -webkit-tap-highlight-color:transparent;
+}
+button{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.blob{position:fixed;border-radius:50%;opacity:.55;z-index:0;animation:drift 18s ease-in-out infinite alternate;pointer-events:none;will-change:transform}
+.b1{width:420px;height:420px;background:radial-gradient(circle,rgba(22,163,74,.55),transparent 68%);top:-140px;right:-140px}
+.b2{width:380px;height:380px;background:radial-gradient(circle,rgba(16,185,129,.5),transparent 68%);bottom:-120px;left:-120px;animation-delay:-6s}
+.b3{width:300px;height:300px;background:radial-gradient(circle,rgba(132,204,22,.35),transparent 68%);top:45%;left:25%;animation-delay:-11s}
+@keyframes drift{to{transform:translate3d(30px,-40px,0) scale(1.15)}}
+.emo{position:fixed;font-size:26px;z-index:0;opacity:.5;animation:float 10s ease-in-out infinite;pointer-events:none;will-change:transform}
+@keyframes float{50%{transform:translate3d(0,-22px,0) rotate(10deg)}}
+main{position:relative;z-index:1;max-width:720px;margin:0 auto;padding:16px 14px 150px}
+header{text-align:center;padding:26px 10px 8px}
+header h1{margin:0;font-size:28px;font-weight:800;background:linear-gradient(90deg,var(--a),var(--d),var(--c));-webkit-background-clip:text;background-clip:text;color:transparent}
+header p{margin:4px 0 0;color:var(--tg-hint);font-size:14px}
+.rocket{display:inline-block;font-size:42px;animation:fly 3.5s ease-in-out infinite;will-change:transform}
+@keyframes fly{50%{transform:translate3d(-8px,-12px,0) rotate(-8deg)}}
+section{background:var(--tg-secondary);border:1px solid var(--line);border-radius:22px;padding:16px;margin:16px 0;box-shadow:0 8px 28px var(--glow)}
+h2{margin:0 0 12px;font-size:18px;font-weight:800;display:flex;align-items:center;gap:8px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+label{display:block;font-size:12.5px;color:var(--tg-hint);margin-bottom:3px;font-weight:600}
+input,select,textarea{
+  width:100%;min-height:44px;font:inherit;font-size:16px;
+  -webkit-appearance:none;appearance:none;
+  color:var(--tg-text);background:var(--tg-bg);
+  border:2px solid transparent;border-radius:12px;padding:9px 12px;outline:none;
+  transition:border-color .2s,transform .2s
+}
+input:focus,select:focus,textarea:focus{border-color:var(--a);transform:translateY(-1px)}
+textarea{min-height:110px;resize:vertical}
+.field{margin-bottom:10px}
+.part{border:2px dashed var(--line);border-radius:18px;padding:12px;margin-bottom:12px;position:relative;transition:border-color .3s,background .3s}
+.part.done{border-style:solid;border-color:var(--b);background:rgba(22,163,74,.07)}
+.part h3{margin:0 0 8px;font-size:15px;display:flex;align-items:center;gap:8px}
+.badge{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--a),var(--d));color:#fff;font-weight:800;transition:transform .6s cubic-bezier(.22,1,.36,1),background-color .3s}
+.part.done .badge{background:var(--b);transform:rotate(360deg) scale(1.1)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:2px solid var(--line);background:transparent;color:var(--tg-text);font:inherit;font-size:13px;padding:4px 12px;border-radius:99px;cursor:pointer;transition:background-color .25s,border-color .25s,color .25s,transform .2s}
+.chip:active{transform:scale(.92)}
+.chip.on{background:var(--a);border-color:var(--a);color:#fff;animation:pop .3s}
+@keyframes pop{50%{transform:scale(1.15)}}
+.del{position:absolute;top:8px;left:8px;border:0;background:none;color:var(--tg-hint);font-size:16px;cursor:pointer}
+.btn{font:inherit;font-weight:600;font-size:14px;border:0;border-radius:14px;padding:9px 13px;cursor:pointer;color:#fff;background:linear-gradient(135deg,var(--a),var(--d));transition:transform .15s,box-shadow .2s;box-shadow:0 6px 16px var(--glow)}
+.btn:hover{transform:translateY(-2px)}.btn:active{transform:scale(.95)}
+.btn.ghost{background:transparent;color:var(--a);border:2px dashed var(--a);box-shadow:none}
+.sleepres{margin-top:8px;color:var(--tg-hint);font-size:14px}
+.stats{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center}
+.ring{position:relative;width:128px;height:128px}
+.ring svg{transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:11;stroke-linecap:round}
+.ring .t{stroke:var(--line)}
+.ring .p{stroke:url(#g);stroke-dasharray:314;stroke-dashoffset:314;transition:stroke-dashoffset 1s cubic-bezier(.22,1,.36,1)}
+.ring b{position:absolute;top:0;left:0;right:0;bottom:0;display:grid;place-items:center;text-align:center;font-size:13px;line-height:1.3}
+.ring b span{font-size:20px;font-weight:800;display:block}
+.big{font-size:22px;font-weight:800;color:var(--a)}
+.slider{margin-bottom:12px}
+.slider .top{display:flex;justify-content:space-between;align-items:center;font-weight:600;font-size:14px}
+.face{font-size:28px;display:inline-block;transition:transform .3s}
+input[type=range]{padding:0;height:8px;min-height:0;margin:10px 0;background:var(--line);border-radius:99px;appearance:none;-webkit-appearance:none;border:0}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--a),var(--d));border:3px solid #fff;box-shadow:0 2px 8px var(--glow)}
+input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--a);border:3px solid #fff}
+.bar{flex-wrap:wrap;position:fixed;bottom:0;left:0;right:0;z-index:5;display:flex;gap:8px;justify-content:center;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));background:rgba(255,255,255,.94);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-top:1px solid var(--line)}
+.toast{position:fixed;top:calc(16px + env(safe-area-inset-top,0px));left:50%;transform:translate(-50%,-120px);background:var(--ink);color:var(--bg);padding:10px 20px;border-radius:99px;z-index:20;transition:transform .4s cubic-bezier(.3,1.4,.5,1);font-weight:600}
+.toast.show{transform:translate(-50%,0)}
+#cv{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:30}
+.org{display:flex;justify-content:space-between;align-items:center;gap:10px;background:linear-gradient(135deg,var(--a),var(--d));color:#fff;border-radius:18px;padding:11px 14px;font-weight:600;font-size:13px;box-shadow:0 8px 22px var(--glow);animation:rise .7s cubic-bezier(.22,1,.36,1) both}
+.org span{flex:1}.org span:last-child{text-align:left}
+main>section,header{animation:rise .75s cubic-bezier(.22,1,.36,1) both}
+header{animation-delay:.05s}main>section:nth-of-type(1){animation-delay:.1s}main>section:nth-of-type(2){animation-delay:.15s}main>section:nth-of-type(3){animation-delay:.2s}main>section:nth-of-type(4){animation-delay:.25s}
+@keyframes rise{from{opacity:0;transform:translate3d(0,18px,0)}to{opacity:1;transform:none}}
+.nav{display:flex;align-items:center;gap:8px}#hist{gap:8px}.quote{text-align:center;font-size:14px;color:var(--tg-hint);min-height:24px}
+@media (max-width:420px){.stats{grid-template-columns:1fr;justify-items:center;text-align:center}.row{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media print{.bar,.blob,.emo,.del,#addPart,#addRt{display:none!important}section{box-shadow:none;break-inside:avoid}}
+.tg-only{display:none}
+body.tg .tg-only{display:inline-flex}
+body.tg .bar{padding-bottom:calc(70px + env(safe-area-inset-bottom,0px))}
+</style>
+</head>
+<body>
+<div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+<span class="emo" style="top:12%;left:6%">📚</span>
+<span class="emo" style="top:30%;right:4%;animation-delay:-3s">✏️</span>
+<span class="emo" style="top:62%;left:4%;animation-delay:-6s">⭐</span>
+<span class="emo" style="top:82%;right:8%;animation-delay:-2s">💡</span>
+<canvas id="cv"></canvas>
+<div class="toast" id="toast"></div>
+
+<main>
+<div class="org"><span>🎓 مشاور: دکتر امیررضا کهندل</span><span>🍏 موسسه آموزشی سیب ترش</span></div>
+<header>
+  <div class="rocket">🚀</div>
+  <h1>گزارش مطالعه روزانه</h1>
+  <p class="quote" id="quote"></p>
+  <p id="tgStatus" style="font-size:12px;color:var(--tg-hint);margin-top:6px"></p>
+</header>
+
+<section>
+  <h2>👤 اطلاعات روز</h2>
+  <div class="row">
+    <div class="field"><label>نام</label><input id="name" placeholder="نام و نام خانوادگی"></div>
+    <div class="field"><label>📅 تاریخ (برای رفتن به روز دیگر، فلش بزن)</label><div class="nav"><button type="button" class="chip" id="prev">▶</button><b id="dlabel" style="flex:1;text-align:center;cursor:pointer"></b><button type="button" class="chip" id="next">◀</button></div></div>
+  </div>
+</section>
+
+<section>
+  <h2>🗓️ روزهای من</h2>
+  <div class="chips" id="hist"></div>
+</section>
+
+<section>
+  <h2>📚 مطالعه اصلی</h2>
+  <div id="parts"></div>
+  <button class="btn ghost" id="addPart">➕ افزودن پارت</button>
+</section>
+
+<section>
+  <h2>🔁 روتین‌های روزانه</h2>
+  <div id="routines"></div>
+  <button class="btn ghost" id="addRt">➕ افزودن روتین</button>
+</section>
+
+<section>
+  <h2>😴 خواب</h2>
+  <div class="row">
+    <div class="field"><label>🌙 ساعت خواب</label><input type="time" id="sleep"></div>
+    <div class="field"><label>🌅 ساعت بیداری</label><input type="time" id="wake"></div>
+  </div>
+  <div class="sleepres" id="sleepres"></div>
+</section>
+
+<section>
+  <h2>📊 جمع‌بندی روز</h2>
+  <div class="stats">
+    <div class="ring">
+      <svg width="128" height="128" viewBox="0 0 128 128"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#16a34a"/><stop offset="1" stop-color="#84cc16"/></linearGradient></defs>
+      <circle class="t" cx="64" cy="64" r="50"/><circle class="p" id="ringp" cx="64" cy="64" r="50"/></svg>
+      <b><div><span id="pct">۰٪</span>هدف روز</div></b>
+    </div>
+    <div>
+      <div>⏳ مجموع زمان مطالعه: <span class="big" id="totTime">۰</span></div>
+      <div>🎯 مجموع تست: <span class="big" id="totTests">۰</span></div>
+      <div class="field" style="margin-top:8px"><label>هدف مطالعه امروز (ساعت)</label><input type="number" id="goal" min="1" max="16" value="8"></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>🧠 ارزیابی شخصی</h2>
+  <div id="sliders"></div>
+</section>
+
+<section>
+  <h2>💬 گزارش کوتاه</h2>
+  <div class="field"><label>❌ مهم‌ترین مشکل امروز</label><textarea id="problem" placeholder="امروز چی اذیتت کرد؟ بنویس تا فردا حلش کنیم..."></textarea></div>
+</section>
+</main>
+
+<div class="bar">
+  <button class="btn" id="save">💾 ذخیره و جشن!</button>
+  <button class="btn" id="copy" style="background:linear-gradient(135deg,var(--b),var(--a))">📋 کپی گزارش</button>
+  <button class="btn" id="share" style="background:linear-gradient(135deg,var(--d),var(--c))">📤 اشتراک‌گذاری</button>
+  <button class="btn" id="tg" style="background:linear-gradient(135deg,#2aabee,#229ed9)">✈️ ارسال به تلگرام</button>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const fa=n=>Number(n).toLocaleString('fa-IR');
+const ACTS=['درسنامه','تست','مرور','کلاس','خلاصه‌نویسی'];
+const SL=[['🎯 تمرکز','focus',['😵','😕','😐','🙂','🤩']],['😊 حال روحی','mood',['😢','😟','😐','😊','😄']],['⚡ انرژی','energy',['🪫','😴','😐','💪','⚡']],['💯 رضایت از عملکرد','sat',['😞','🙁','😐','😌','🏆']]];
+const QUOTES=['هر تست، یک قدم نزدیک‌تر به رتبه‌ی دلخواهت 🏆','کم‌کم، ولی هر روز. این یعنی پیروزی 💪','امروزت رو بساز؛ فردا ازت تشکر می‌کنه ✨','تمرکز یعنی قدرت. تو داری‌ش 🔥'];
+$('quote').textContent=QUOTES[Math.floor(Math.random()*QUOTES.length)];
+
+/* ========== Telegram WebApp ========== */
+const tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
+const isTG = !!(tg && tg.initData);
+if (isTG) {
+  document.body.classList.add('tg');
+  tg.ready();
+  tg.expand();
+  try { tg.disableVerticalSwipes(); } catch(e){}
+  // Apply theme
+  const tp = tg.themeParams || {};
+  if (tp.bg_color) document.documentElement.style.setProperty('--tg-bg', tp.bg_color);
+  if (tp.text_color) document.documentElement.style.setProperty('--tg-text', tp.text_color);
+  if (tp.hint_color) document.documentElement.style.setProperty('--tg-hint', tp.hint_color);
+  if (tp.button_color) document.documentElement.style.setProperty('--tg-button', tp.button_color);
+  if (tp.button_text_color) document.documentElement.style.setProperty('--tg-button-text', tp.button_text_color);
+  if (tp.secondary_bg_color) document.documentElement.style.setProperty('--tg-secondary', tp.secondary_bg_color);
+  if (tp.bg_color) document.documentElement.style.setProperty('--bg', tp.bg_color);
+  if (tp.secondary_bg_color) document.documentElement.style.setProperty('--card', tp.secondary_bg_color);
+  tg.setHeaderColor(tp.bg_color || '#f3fbf6');
+  tg.setBackgroundColor(tp.bg_color || '#f3fbf6');
+  $('tgStatus').textContent = '✅ در حال اجرا داخل تلگرام';
+} else {
+  $('tgStatus').textContent = '🌐 حالت مرورگر (برای ذخیره ابری داخل تلگرام باز کن)';
+}
+
+function haptic(type){
+  if(!tg || !tg.HapticFeedback) return;
+  try{
+    if(type==='success') tg.HapticFeedback.notificationOccurred('success');
+    else if(type==='error') tg.HapticFeedback.notificationOccurred('error');
+    else if(type==='light') tg.HapticFeedback.impactOccurred('light');
+    else tg.HapticFeedback.selectionChanged();
+  }catch(e){}
+}
+
+/* ========== Storage Layer (CloudStorage + localStorage fallback) ========== */
+const STORAGE_PREFIX = 'sr:';
+let useCloud = false;
+
+function cloudSet(key, value){
+  return new Promise((resolve)=>{
+    if(!tg || !tg.CloudStorage){ resolve(false); return; }
+    tg.CloudStorage.setItem(STORAGE_PREFIX + key, value, (err)=>{
+      resolve(!err);
+    });
+  });
+}
+function cloudGet(key){
+  return new Promise((resolve)=>{
+    if(!tg || !tg.CloudStorage){ resolve(null); return; }
+    tg.CloudStorage.getItem(STORAGE_PREFIX + key, (err, val)=>{
+      resolve(err ? null : val);
+    });
+  });
+}
+function cloudGetKeys(){
+  return new Promise((resolve)=>{
+    if(!tg || !tg.CloudStorage){ resolve([]); return; }
+    tg.CloudStorage.getKeys((err, keys)=>{
+      if(err || !keys){ resolve([]); return; }
+      resolve(keys.filter(k=>k.startsWith(STORAGE_PREFIX)).map(k=>k.slice(STORAGE_PREFIX.length)));
+    });
+  });
+}
+
+async function storageSet(key, value){
+  const str = typeof value === 'string' ? value : JSON.stringify(value);
+  // Always write localStorage as backup
+  try{ localStorage.setItem(STORAGE_PREFIX + key, str); }catch(e){}
+  if(isTG){
+    const ok = await cloudSet(key, str);
+    useCloud = ok;
+    return ok;
+  }
+  return true;
+}
+async function storageGet(key){
+  if(isTG){
+    const val = await cloudGet(key);
+    if(val !== null && val !== undefined){
+      useCloud = true;
+      return val;
+    }
+  }
+  try{ return localStorage.getItem(STORAGE_PREFIX + key); }catch(e){ return null; }
+}
+async function storageKeys(){
+  if(isTG){
+    const keys = await cloudGetKeys();
+    if(keys.length){ useCloud = true; return keys; }
+  }
+  const ks = [];
+  try{
+    for(let i=0;i<localStorage.length;i++){
+      const k = localStorage.key(i);
+      if(k && k.startsWith(STORAGE_PREFIX) && /^sr:\d{4}-\d\d-\d\d$/.test(k)) ks.push(k.slice(STORAGE_PREFIX.length));
+    }
+  }catch(e){}
+  return ks;
+}
+
+let loading=true,cur='';
+function iso(d){const z=new Date(d.getTime()-d.getTimezoneOffset()*60000);return z.toISOString().slice(0,10)}
+function pd(k){const a=k.split('-');return new Date(+a[0],+a[1]-1,+a[2])}
+function label(k){try{return new Intl.DateTimeFormat('fa-IR-u-ca-persian',{weekday:'long',year:'numeric',month:'long',day:'numeric'}).format(pd(k))}catch(e){return k}}
+
+let partN=0,rtN=0;
+function addPart(d){
+  d=d||{};partN++;
+  const el=document.createElement('div');el.className='part';
+  el.innerHTML=`<button class="del" title="حذف">✕</button><h3><span class="badge"></span>پارت</h3>
+  <div class="row"><div class="field"><label>📖 درس</label><input class="lesson" value="${d.lesson||''}"></div>
+  <div class="field"><label>📝 مبحث</label><input class="topic" value="${d.topic||''}"></div></div>
+  <div class="field"><label>✅ فعالیت</label><div class="chips">${ACTS.map(a=>`<button type="button" class="chip${(d.acts||[]).includes(a)?' on':''}">${a}</button>`).join('')}</div></div>
+  <div class="row"><div class="field"><label>⏱️ زمان (دقیقه)</label><input type="number" min="0" class="min" value="${d.min||''}"></div>
+  <div class="field"><label>🎯 تعداد تست</label><input type="number" min="0" class="tests" value="${d.tests||''}"></div></div>`;
+  el.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{c.classList.toggle('on');update();haptic('light')});
+  el.querySelector('.del').onclick=()=>{el.remove();renum();update();haptic('light')};
+  el.addEventListener('input',update);
+  $('parts').appendChild(el);renum();update();
+}
+function renum(){[...$('parts').children].forEach((p,i)=>p.querySelector('.badge').textContent=fa(i+1))}
+function addRt(d){
+  d=d||{};
+  const el=document.createElement('div');el.className='part';
+  el.innerHTML=`<button class="del" title="حذف">✕</button><div class="row"><div class="field"><label>📝 مبحث</label><input class="topic" value="${d.topic||''}"></div>
+  <div class="field"><label>⏱️ زمان (دقیقه)</label><input type="number" min="0" class="min" value="${d.min||''}"></div></div>`;
+  el.querySelector('.del').onclick=()=>{el.remove();update();haptic('light')};
+  el.addEventListener('input',update);
+  $('routines').appendChild(el);update();
+}
+const fmt=m=>{const h=Math.floor(m/60),r=m%60;return h?`${fa(h)} ساعت${r?' و '+fa(r)+' دقیقه':''}`:`${fa(r)} دقیقه`};
+function tot(){
+  let m=0,t=0;
+  document.querySelectorAll('#parts .part').forEach(p=>{
+    const mm=+p.querySelector('.min').value||0,tt=+p.querySelector('.tests').value||0;
+    m+=mm;t+=tt;
+    p.classList.toggle('done',!!(p.querySelector('.lesson').value&&mm>0));
+  });
+  return {m,t};
+}
+function tween(id,to,suf){const el=$(id),from=+(el._v||0),t0=performance.now();el._v=to;el._k=t0;(function f(n){if(el._k!==t0)return;const k=Math.min(1,(n-t0)/600),e=1-Math.pow(1-k,3);el.textContent=fa(Math.round(from+(to-from)*e))+(suf||'');if(k<1)requestAnimationFrame(f)})(t0)}
+function update(){
+  const {m,t}=tot();
+  $('totTime').textContent=fmt(m);tween('totTests',t);
+  const goal=(+$('goal').value||8)*60,p=Math.min(1,m/goal);
+  $('ringp').style.strokeDashoffset=314*(1-p);
+  tween('pct',Math.round(p*100),'٪');
+  const s=$('sleep').value,w=$('wake').value;
+  if(s&&w){let a=s.split(':'),b=w.split(':');let d=(+b[0]*60+ +b[1])-(+a[0]*60+ +a[1]);if(d<=0)d+=1440;
+    $('sleepres').textContent='😴 مدت خواب: '+fmt(d)+(d<360?' — کمه! امشب زودتر بخواب 🌙':d>600?' — کمی زیاده 😅':' — عالیه ✅')}
+  else $('sleepres').textContent='';
+  if(!loading)persist();
+  updateMainButton();
+}
+SL.forEach(([lab,id,faces])=>{
+  const d=document.createElement('div');d.className='slider';
+  d.innerHTML=`<div class="top"><span>${lab}</span><span><span class="face" id="f_${id}">😐</span> <b id="v_${id}">۵</b> از ۱۰</span></div><input type="range" min="0" max="10" value="5" id="r_${id}">`;
+  $('sliders').appendChild(d);
+  const r=d.querySelector('input');
+  r.oninput=()=>{const v=+r.value,f=$('f_'+id);f.textContent=faces[Math.min(4,Math.floor(v/2.5))];f.style.transform='scale(1.4) rotate('+(v-5)*4+'deg)';setTimeout(()=>f.style.transform='',250);$('v_'+id).textContent=fa(v);if(!loading)persist();haptic('light')};
+  r.oninput();
+});
+['name','goal','sleep','wake','problem'].forEach(id=>$(id).addEventListener('input',update));
+$('addPart').onclick=()=>{addPart();haptic('light')};$('addRt').onclick=()=>{addRt();haptic('light')};
+
+function collect(){
+  return {name:$('name').value,date:label(cur),goal:$('goal').value,sleep:$('sleep').value,wake:$('wake').value,problem:$('problem').value,
+    parts:[...document.querySelectorAll('#parts .part')].map(p=>({lesson:p.querySelector('.lesson').value,topic:p.querySelector('.topic').value,acts:[...p.querySelectorAll('.chip.on')].map(c=>c.textContent),min:p.querySelector('.min').value,tests:p.querySelector('.tests').value})),
+    rts:[...document.querySelectorAll('#routines .part')].map(p=>({topic:p.querySelector('.topic').value,min:p.querySelector('.min').value})),
+    sl:SL.map(s=>$('r_'+s[1]).value)};
+}
+
+async function getDay(k){
+  try{
+    const raw = await storageGet(k);
+    return raw ? JSON.parse(raw) : null;
+  }catch(e){return null}
+}
+async function persist(){
+  if(loading||!cur)return;
+  try{
+    await storageSet(cur, collect());
+    await storageSet('prof', {name:$('name').value,goal:$('goal').value});
+    drawHist();
+  }catch(e){console.warn(e)}
+}
+async function loadDay(k){
+  loading=true;cur=k;
+  $('dlabel').textContent=label(k)+(k===iso(new Date())?' (امروز)':'');
+  $('parts').innerHTML='';$('routines').innerHTML='';
+  let prof={};
+  try{
+    const raw = await storageGet('prof');
+    if(raw) prof = JSON.parse(raw);
+  }catch(e){}
+  const d = await getDay(k);
+  // Prefer Telegram user name if available and no saved name
+  let defaultName = (d&&d.name)||prof.name||'';
+  if(!defaultName && tg && tg.initDataUnsafe && tg.initDataUnsafe.user){
+    const u = tg.initDataUnsafe.user;
+    defaultName = ((u.first_name||'') + ' ' + (u.last_name||'')).trim();
+  }
+  $('name').value = defaultName;
+  $('goal').value=(d&&d.goal)||prof.goal||8;
+  $('sleep').value=(d&&d.sleep)||'';$('wake').value=(d&&d.wake)||'';$('problem').value=(d&&d.problem)||'';
+  (d&&d.parts&&d.parts.length?d.parts:[{},{},{},{}]).forEach(addPart);
+  (d&&d.rts&&d.rts.length?d.rts:[{}]).forEach(addRt);
+  SL.forEach((x,i)=>{$('r_'+x[1]).value=d&&d.sl?d.sl[i]:5;$('r_'+x[1]).oninput()});
+  update();loading=false;drawHist();
+}
+async function drawHist(){
+  const h=$('hist');h.innerHTML='';
+  const ks = await storageKeys();
+  ks.sort().reverse().slice(0,14).forEach(async k=>{
+    const d=await getDay(k);if(!d)return;
+    const m=(d.parts||[]).reduce((a,x)=>a+(+x.min||0),0);if(!m&&k!==cur)return;
+    const b=document.createElement('button');b.className='chip'+(k===cur?' on':'');
+    let t=k;try{t=new Intl.DateTimeFormat('fa-IR-u-ca-persian',{month:'short',day:'numeric'}).format(pd(k))}catch(e){}
+    b.textContent=t+' — '+fa(Math.round(m/6)/10)+' ساعت';
+    b.onclick=()=>{loadDay(k);haptic('light')};
+    h.appendChild(b);
+  });
+  // small delay to check if empty
+  setTimeout(()=>{if(!h.children.length)h.textContent='هنوز روزی ذخیره نشده. از امروز شروع کن 🌱'},300);
+}
+function shift(n){const d=pd(cur);d.setDate(d.getDate()+n);loadDay(iso(d))}
+$('prev').onclick=()=>{shift(-1);haptic('light')};$('next').onclick=()=>{shift(1);haptic('light')};
+$('dlabel').onclick=()=>{loadDay(iso(new Date()));haptic('light')};
+
+function toast(t){const e=$('toast');e.textContent=t;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),2200)}
+function report(){
+  const d=collect(),{m,t}=tot(),L='━━━━━━━━━━━━━━━━━━━━',n=['1⃣','2⃣','3⃣','4⃣','5⃣','6⃣','7⃣','8⃣'];
+  let s=`📋 گزارش مطالعه روزانه\n👤 نام: ${d.name}\n📅 تاریخ: ${d.date}\n${L}\n📚 پارت اول | مطالعه اصلی\n`;
+  d.parts.forEach((p,i)=>{s+=`\nپارت${n[i]||i+1}\n📖 درس: ${p.lesson}\n📝 مبحث: ${p.topic}\n✅ فعالیت: ${p.acts.join('، ')}\n⏱️ زمان: ${p.min?p.min+' دقیقه':''}\n🎯 تعداد تست: ${p.tests}\n`});
+  s+=`${L}\n🔁 روتین‌های روزانه\n`;
+  d.rts.forEach((r,i)=>{s+=`\n${['①','②','③','④','⑤','⑥'][i]||i+1} 📝 مبحث: ${r.topic}\n⏱️ زمان: ${r.min?r.min+' دقیقه':''}\n`});
+  s+=`${L}\n😴 خواب\n🌙 ساعت خواب: ${d.sleep}\n🌅 ساعت بیداری: ${d.wake}\n${L}\n📊 جمع‌بندی روز\n⏳ مجموع زمان مطالعه: ${fmt(m)}\n🎯 مجموع تست: ${fa(t)}\n${L}\n🧠 ارزیابی شخصی\n\n`;
+  s+=`🎯 تمرکز: ${d.sl[0]}/10\n😊 حال روحی: ${d.sl[1]}/10\n⚡ انرژی: ${d.sl[2]}/10\n💯 رضایت از عملکرد: ${d.sl[3]}/10\n${L}\n💬 گزارش کوتاه\n❌ مهم‌ترین مشکل امروز:\n${d.problem}`;
+  return s;
+}
+$('copy').onclick=async()=>{
+  const s=report();
+  try{await navigator.clipboard.writeText(s);toast('📋 گزارش کپی شد!');haptic('success')}
+  catch(e){const a=document.createElement('textarea');a.value=s;document.body.appendChild(a);a.select();try{document.execCommand('copy');toast('📋 گزارش کپی شد!');haptic('success')}catch(_){toast('کپی نشد، دستی انتخاب کن');haptic('error')}a.remove()}
+};
+$('tg').onclick=()=>{
+  const s=report();
+  try{if(navigator.clipboard)navigator.clipboard.writeText(s).catch(function(){})}catch(e){}
+  if(tg && tg.openTelegramLink){
+    const u='https://t.me/share/url?url='+encodeURIComponent(location.href)+'&text='+encodeURIComponent(s);
+    tg.openTelegramLink(u);
+  } else {
+    const u='https://t.me/share/url?url='+encodeURIComponent(location.href)+'&text='+encodeURIComponent(s);
+    const a=document.createElement('a');a.href=u;a.target='_blank';a.rel='noopener';document.body.appendChild(a);a.click();a.remove();
+  }
+  toast('✈️ تلگرام باز می‌شه. چت رو انتخاب کن');
+  haptic('success');
+};
+$('share').onclick=()=>{
+  const s=report();
+  if(navigator.share){navigator.share({text:s}).catch(function(){})}else{$('copy').click()}
+  haptic('light');
+};
+
+function updateMainButton(){
+  if(!tg || !tg.MainButton) return;
+  const {m} = tot();
+  if(m > 0){
+    tg.MainButton.setText('💾 ذخیره گزارش');
+    tg.MainButton.show();
+    tg.MainButton.enable();
+  } else {
+    tg.MainButton.hide();
+  }
+}
+if(tg && tg.MainButton){
+  tg.MainButton.onClick(()=>{
+    loading=false;
+    persist().then(()=>{
+      toast('🎉 آفرین! گزارش امروز ذخیره شد');
+      confetti();
+      haptic('success');
+      try{ tg.MainButton.showProgress(); setTimeout(()=>tg.MainButton.hideProgress(),800); }catch(e){}
+    });
+  });
+}
+
+$('save').onclick=()=>{
+  loading=false;
+  persist().then(()=>{
+    toast('🎉 آفرین! گزارش امروز ذخیره شد');
+    confetti();
+    haptic('success');
+  });
+};
+
+function confetti(){
+  const c=$('cv'),x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;
+  const cols=['#16a34a','#34d399','#84cc16','#facc15','#059669'];
+  const ps=Array.from({length:130},()=>({x:innerWidth/2,y:innerHeight*0.8,vx:(Math.random()-.5)*16,vy:-Math.random()*17-6,s:Math.random()*8+4,c:cols[Math.floor(Math.random()*5)],r:Math.random()*6,vr:(Math.random()-.5)*.4}));
+  let f=0;
+  (function go(){x.clearRect(0,0,c.width,c.height);
+    ps.forEach(p=>{p.vy+=.35;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle=p.c;x.fillRect(-p.s/2,-p.s/2,p.s,p.s*.6);x.restore()});
+    if(++f<110)requestAnimationFrame(go);else x.clearRect(0,0,c.width,c.height)})();
+}
+
+// Start
+loadDay(iso(new Date()));
+</script>
+</body>
+</html>
